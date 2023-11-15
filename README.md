@@ -6,6 +6,7 @@ Please create an issue if there are problems. We are preparing a notebook and mo
 
 If you find our work useful, please cite us:
 
+```
 @inproceedings{hoyle-etal-2023-natural,
     title = "Natural Language Decompositions of Implicit Content Enable Better Text Representations",
     author = "Hoyle, Alexander and
@@ -17,3 +18,4 @@ If you find our work useful, please cite us:
     publisher = "Association for Computational Linguistics",
     url = "https://arxiv.org/abs/2305.14583",
 }
+```
