@@ -1,8 +1,9 @@
 # ignore scratch 
 scratch.py
 
-
-
 # ignore the data
-data/*
-test.jsonl
+# data/* releasing the data 
+
+
+# ignore pycache
+__pycache__/
