@@ -15,11 +15,8 @@ import langchain
 from langchain.schema import LLMResult
 from langchain.cache import SQLiteCache
 
-from mteb import MTEB
 
-from data.exemplars import create_exemplar_pool
 from config import load_config
-from collect_results import collect_results, save_results
 from generation_utils import (
     OpenAIPB,
     OpenAIChatPB,
@@ -34,6 +31,16 @@ warnings.filterwarnings(
     "ignore", 
     message="Both `max_new_tokens`.*",
 )
+
+def write_jsonl(data, fpath):
+    with open(fpath, "w") as outfile:
+        for index, line in enumerate(data): 
+            s = json.dumps(line, ensure_ascii=False)
+            if index == len(data) - 1:
+                outfile.write(s)
+            else: 
+                outfile.write(f"{s}\n")
+
 
 def read_jsonl(fpath):
     with open(fpath) as infile:

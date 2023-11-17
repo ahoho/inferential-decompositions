@@ -1,0 +1,41 @@
+main:
+  seed: 11235
+  results_dir_template: ./results/propositions/text-davinci-003/s2s-{{embeddings.embedding_model_name | replace('-', '_')}}-{{embeddings.output_combination_strategy}}-{{exemplars.shuffles_per_draw*exemplars.draws_per_pool*llm.generations_per_prompt}}_gens_per_inst-{{main.proposition_type}}_propositions/{{main.experiment_name}}
+  experiment_name: propositions-tutorial
+  dry_run: false
+  proposition_type: all
+  cache_db_path: null
+data:
+  eval_task_names:
+  eval_splits:
+  - test
+  subsample_size: null
+  instructions: "Human utterances communicate propositions that may not be explicit in the literal meaning of the utterance. For each utterance, state the implicit propositions communicated by that utterance in a brief list. Implicit propositions may be inferences about the subject of the utterance or about the perspective of its author. All generated propositions should be short, independent, and written in direct speech and simple sentences. These utterances come from tweets by legislators.\n###\n"
+  exemplars_path: ./exemplars/leg_tweets_exemplars.jsonl
+  exemplar_data_sources: null
+  task_langs:
+  - en
+exemplars:
+  format: "Utterance: {input}\nPropositions: {output}"
+  separator: "\n###\n"
+  multi_output_separator: ' | '
+  exemplars_per_prompt: 7
+  draws_per_pool: 1
+  repeat_draws: false
+  shuffles_per_draw: 1
+llm:
+  gen_model_name: gpt-3.5-turbo-0613 
+  openai_api_key: null 
+  generations_per_prompt: 1
+  temperature: 1
+  top_p: 0.95
+  max_tokens: 100
+  generation_kwargs: null
+  save_generations: true
+  optimize: true
+embeddings:
+  do_gen: true
+  embedding_model_name: null
+  include_original_doc: true
+  output_combination_strategy: "concat_doc_gen"
+  device: "cuda"

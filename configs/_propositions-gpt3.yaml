@@ -1,0 +1,79 @@
+# Default experimental settings for paraphrase
+# To run an experiment, create a new .yaml file and edit the parameters you want to change
+# (omitting any you want to keep as as defaults)
+main:
+  seed: 11235
+  results_dir_template: # this configuration file is passed to the following jinja2 template
+    "./results/propositions/text-davinci-003/s2s-{{embeddings.embedding_model_name | replace('-', '_')}}-{{embeddings.output_combination_strategy}}-{{exemplars.shuffles_per_draw*exemplars.draws_per_pool*llm.generations_per_prompt}}_gens_per_inst-{{main.proposition_type}}_propositions/{{main.experiment_name}}"
+  experiment_name: null
+  dry_run: false
+  proposition_type: null # just used in the name
+  cache_db_path: .langchain-openai.db
+
+
+data:
+  eval_task_names: 
+    - "STSBenchmark"
+    - "STS12"
+    - "FullTwitterSemEval2015PC"
+    - "UKPArgAspectSTS"
+    - "ArgFacetSTS"
+    - "BWSArgSTS"
+    - "SICK-R"
+    - "STS13"
+    - "STS14"
+    - "STS15"
+    - "STS16"
+    - "STS17"
+
+  eval_splits: ["test"]
+  subsample_size: null
+  # instruction to the LM
+  instructions: null
+  # `exemplars_path` can be either a path to a jsonl or directory containing preprocessed exemplars from exemplar.py
+  exemplars_path: null
+  exemplar_data_sources: null
+  task_langs: ["en"]
+
+# Terminology & Logic of prompting the LLM
+# In a given prompt, we are trying to classify an input example which we call an "instance".
+# We pass few-shot "exemplars" to the LLM. There are some decisions we can make about
+# which exemplars we select, which are decided by the `sampling_strategy`.
+# Since there are a limited number of exemplars that can fit in a prompt, we can sample
+# multiple times from the training pool (`draws_per_pool`). `repeat_draws` means that
+# they are resampled each time.
+#
+# We can also shuffle the examples each time we query the LM, `shuffles_per_draw`
+exemplars:
+  # Format for the exemplar. Reqiures {input}, {output} keys. Exemplars joined with newlines.
+  # When querying for a given instance, text will be split right before {output}
+  format: "Utterance: {input}\nPropositions: {output}"
+  separator: "\n###\n" # the exemplar separator is also used as the stop token
+  multi_output_separator: " | "
+
+  exemplars_per_prompt: 7 # number of exemplars to include per prompt (set to 0 to not use exemplars)
+  draws_per_pool: 1 # number of draws from the pool of training exemplars
+  repeat_draws: false # allow resampling every draw
+  shuffles_per_draw: 1 # number of times we query the LM per shuffling of exemplars in prompt
+
+# Paramaters for the language model
+llm:
+  gen_model_name: "gpt-3.5-turbo"
+  openai_api_key: null # can specify key directly or include in a file
+  generations_per_prompt: 1
+  temperature: 1
+  top_p: 0.95
+  max_tokens: 100
+  generation_kwargs: null
+
+  save_generations: true
+
+  # huggingface options
+  optimize: true
+
+embeddings:
+  do_gen: true
+  embedding_model_name: null
+  include_original_doc: true
+  output_combination_strategy: null
+  device: null

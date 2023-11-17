@@ -1,0 +1,8 @@
+# ignore scratch 
+scratch.py
+
+
+
+# ignore the data
+data/*
+test.jsonl
