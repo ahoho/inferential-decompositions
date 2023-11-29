@@ -12,7 +12,6 @@ import torch
 from transformers import AutoTokenizer
 import openai
 import langchain
-from langchain.schema import LLMResult
 from langchain.cache import SQLiteCache
 
 
