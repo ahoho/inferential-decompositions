@@ -33,7 +33,7 @@ pip install --no-cache openai==1.3.6 langchain==0.0.344
 pip install --no-cache notebook 
 
 # Torch installs
-pip install torch==2.1.1 torchvision=0.16.1 torchaudio==2.1.1 --index-url https://download.pytorch.org/whl/cu118
+pip install torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --index-url https://download.pytorch.org/whl/cu118
 
 # install sentence-transformers
 pip install --no-cache sentence-transformers
