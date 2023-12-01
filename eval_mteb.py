@@ -12,6 +12,7 @@ import torch
 from transformers import AutoTokenizer
 import openai
 import langchain
+from langchain.schema import LLMResult
 from langchain.cache import SQLiteCache
 
 
@@ -30,20 +31,6 @@ warnings.filterwarnings(
     "ignore", 
     message="Both `max_new_tokens`.*",
 )
-
-def write_jsonl(data, fpath):
-    with open(fpath, "w") as outfile:
-        for index, line in enumerate(data): 
-            s = json.dumps(line, ensure_ascii=False)
-            if index == len(data) - 1:
-                outfile.write(s)
-            else: 
-                outfile.write(f"{s}\n")
-
-
-def read_jsonl(fpath):
-    with open(fpath) as infile:
-        return [json.loads(line) for line in infile if line]
 
 
 class GenerationEmbedder():
