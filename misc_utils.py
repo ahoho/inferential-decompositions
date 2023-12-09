@@ -1,6 +1,8 @@
 import ipywidgets as widgets
 from IPython.display import display, HTML
 import json 
+import numpy as np
+from sentence_transformers.util import cos_sim
 
 def write_jsonl(data, fpath):
     with open(fpath, "w") as outfile:
@@ -19,9 +21,21 @@ def read_jsonl(fpath):
 
 def show_document(index, document_text): 
     return widgets.HTML(
-    value=f"<h3 style='font-family: sans-serif; color:blue;'>Document {index}:</h3>"
+    value=f"<h3 style='font-family: sans-serif; color:blue;'>Document {index+1}:</h3>"
           f"<p style='font-family: Verdana'>{document_text}</p>"
     )
+
+def distance_func(x, y, mode="min") :
+    """
+    x is a set of vectors, so is y
+    return the index i from x and j from y that 
+    corresponds to the minimal possible distance 
+    """
+    dists = 1 - cos_sim(x, y)
+    if mode == "min" :
+        index1, index2 =  np.unravel_index(np.argmin(dists, axis=None), dists.shape)
+        return index1, index2, dists[index1, index2]
+
 
 def create_textboxes(value=None): 
     decomps = []

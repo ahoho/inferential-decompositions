@@ -12,7 +12,7 @@ if ! { conda env list | grep "${env_name}"; } >/dev/null 2>&1; then
 fi
 
 eval "$(conda shell.bash hook)"
-conda activate ${env_name}
+conda activate "${env_name}"
 
 # huggingface installs
 pip install --no-cache transformers==4.35.2 datasets==2.15.0
@@ -27,7 +27,7 @@ conda install -c conda-forge nb_conda_kernels
 # pip install --no-cache jupyterlab
 
 # install openai and langchain
-pip install --no-cache openai==1.3.6 langchain==0.0.344
+pip install --no-cache openai==0.28 langchain==0.0.186
 
 # if you prefer the classic notebook interface, uncomment the following line
 pip install --no-cache notebook 
@@ -44,5 +44,5 @@ pip install --no-cache nltk
 # misc other standard-ish packages (if not already installed as dependencies)
 pip install --no-cache numpy pandas scipy scikit-learn matplotlib 
 
-# outputs 
-pip install --no-cache rich loguru jsonlines
+# output formatting, logging
+pip install --no-cache rich loguru jsonlines simple_colors
