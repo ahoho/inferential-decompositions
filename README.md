@@ -11,7 +11,19 @@ Repository for [Natural Language Decompositions of Implicit Content Enable Bette
 * We have released a notebook with a step-by-step process to generate inferential decompositions. Please refer to [decomposition_tutorial.ipynb](./decomposition_tutorial.ipynb) for more details.
 * We have also released the text and inferential decompositions from the legislative tweets dataset used in Section 5 in our paper for analyzing legislator behaviour.
 
-### Setting up the environment: 
+### Environment Setup
+----
+We recommend using a conda environment to run the notebook. If you don't have conda installed, you can download it [here](https://docs.conda.io/en/latest/miniconda.html). Install the required packages using the following commands:
+  
+**Linux**:  ```conda env create -f environment.yml```\
+**OSX**:  ```conda env create -f environment_mac.yml```
+
+Note: The CUDA version assumed in the torch installation is 12.x, please change to the version you have installed or use CPU. Check the [PyTorch website](https://pytorch.org/get-started/previous-versions/) for compatibilities on previous versions.
+
+For manual installation, please refer to the instructions below.
+
+<details>
+<summary>Instructions for Manual Installation</summary>
 
 - Create an environment using conda: 
 ```conda create --name decompositions -c conda-forge python=3.10 ipykernel ipywidgets jupyterlab notebook nb_conda_kernels```
@@ -25,29 +37,41 @@ Repository for [Natural Language Decompositions of Implicit Content Enable Bette
 - ```conda install conda-forge::transformers==4.31.0 datasets==2.16.1```
 - Install specific versions of ```openai``` and ```langchain```:  ```pip install openai==0.28 langchain==0.0.186```
 - Install remaining dependencies: ```pip install matplotlib nltk jsonlines simple_colors```
-- Set OpenAI API key: ```conda env config vars set OPENAI_API_KEY=<your key>```
-- Finally, deactivate and reactivate the environment: ```conda deactivate``` and ```conda activate decompositions```
-
-After setting up the repo, run the [decomposition_tutorial.ipynb](./decomposition_tutorial.ipynb) to see the method in action (and to use your own prompts and exemplars on your own dataset.). Don't forget to select the kernel for the `decompositions` environment in the notebook!
+</details>
 
 ---
+#### Final Steps
+
+- Set OpenAI API key: ```conda env config vars set OPENAI_API_KEY=<your key>```
+- Finally, deactivate and reactivate the environment: ```conda deactivate``` and ```conda activate decompositions```\
+
+After setting up the repo, run the [decomposition_tutorial.ipynb](./decomposition_tutorial.ipynb) to see the method in action (and to use your own prompts and exemplars on your own dataset.). Don't forget to select the kernel for the `decompositions` environment in the notebook!
 
 We're excited to hear what you use our method for! Please reach out with any questions or comments, or create an issue. 
 
 The COVID vaccine comment dataset is available upon request (all comments are publicly available, but we elected not to re-host data out of concern for commenters' privacy).
+
+---- 
 
 If you find our work useful, please cite us:
 
 ```
 @inproceedings{hoyle-etal-2023-natural,
     title = "Natural Language Decompositions of Implicit Content Enable Better Text Representations",
-    author = "Hoyle, Alexander and
-      Sarkar, Rupak and
+    author = "Hoyle, Alexander  and
+      Sarkar, Rupak  and
       Goel, Pranav  and
       Resnik, Philip",
-    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP)",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
     year = "2023",
+    address = "Singapore",
     publisher = "Association for Computational Linguistics",
-    url = "https://arxiv.org/abs/2305.14583",
+    url = "https://aclanthology.org/2023.emnlp-main.815",
+    doi = "10.18653/v1/2023.emnlp-main.815",
+    pages = "13188--13214",
 }
 ```
